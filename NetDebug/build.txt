@@ -1,5 +1,5 @@
 displayName = Net Debug
 author = hamstar
 version = 1.0.0
-modReferences = HUDElementsLib@3.0.0
+modReferences = HUDElementsLib@3.2.0
 buildIgnore = *.csproj, *.user, *.bat, obj\*, bin\*, .vs\*, .git\*
