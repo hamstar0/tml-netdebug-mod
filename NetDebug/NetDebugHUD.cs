@@ -22,7 +22,8 @@ namespace NetDebug {
 			var container = new UIPanel();
 			container.Width.Set( 0f, 1f );
 			container.Height.Set( 0f, 1f );
-			container.BackgroundColor = Color.White * 0.25f;
+			container.BackgroundColor = Color.White * 0.05f;
+			container.BorderColor *= 0.2f;
 			this.Append( container );
 
 			//
@@ -45,7 +46,8 @@ namespace NetDebug {
 
 		private UIList InitializeList( UIPanel container, bool isLeft ) {
 			var listContainer = new UIPanel();
-			listContainer.BackgroundColor = Color.White * 0.25f;
+			listContainer.BackgroundColor = Color.White * 0.05f;
+			listContainer.BorderColor *= 0.2f;
 			listContainer.Width.Set( 0f, 0.5f );
 			listContainer.Height.Set( 0f, 1f );
 			listContainer.Top.Set( 8f, 0f );

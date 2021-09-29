@@ -17,22 +17,19 @@ namespace NetDebug {
 		private void ApplyNpcSync( IDictionary<int, int> changes ) {
 			bool hasChanged = true;
 
-			int len = Main.npc.Length - 1;
-			for( int i=0; i<len; i++ ) {
-				if( !changes.ContainsKey(i) ) {
-					continue;
-				}
+			foreach( KeyValuePair<int, int> kv in changes ) {
+				int who = kv.Key;
+				int netID = kv.Value;
+				NPC npc = Main.npc[who];
 
-				NPC npc = Main.npc[i];
-
-				if( changes[i] == -1 ) {
+				if( netID == 0 ) {
 					if( npc?.active == true ) {
-						this.RecentNpcChanges[i] = (changes[i], 0);
+						this.RecentNpcChanges[who] = (netID, 0);
 						hasChanged = true;
 					}
 				} else {
-					if( npc?.active != true || npc.type != changes[i] ) {
-						this.RecentNpcChanges[i] = (changes[i], 0);
+					if( npc?.active != true || npc.netID != netID ) {
+						this.RecentNpcChanges[who] = (netID, 0);
 						hasChanged = true;
 					}
 				}
@@ -59,7 +56,7 @@ namespace NetDebug {
 
 				Item item = Main.item[i];
 
-				if( changes[i] == -1 ) {
+				if( changes[i] == 0 ) {
 					if( item?.active == true ) {
 						this.RecentItemChanges[i] = (changes[i], 0);
 						hasChanged = true;

@@ -16,7 +16,7 @@ namespace NetDebug {
 				NPC npc = Main.npc[i];
 				short data = npc?.active == true
 					? (short)npc.netID
-					: (short)-1;
+					: (short)0;
 
 				packet.Write( data );
 			}
@@ -28,7 +28,7 @@ namespace NetDebug {
 				Item item = Main.item[i];
 				short data = item?.active == true
 					? (short)item.type
-					: (short)-1;
+					: (short)0;
 
 				packet.Write( data );
 			}
@@ -51,16 +51,14 @@ namespace NetDebug {
 			len = Main.npc.Length - 1;
 			for( int i=0; i<len; i++ ) {
 				int incNetID = (int)reader.ReadInt16();
-				bool incActive = incNetID != -1;
+				bool incActive = incNetID != 0;
 
-				if( Main.npc[i].active == incActive ) {
-					continue;
-				}
-				if( Main.npc[i].netID == incNetID ) {
-					continue;
-				}
+				NPC npc = Main.npc[i];
+				bool wasActive = npc?.active == true;
 
-				npcChanges[i] = incNetID;
+				if( wasActive != incActive || npc?.netID != incNetID ) {
+					npcChanges[i] = incNetID;
+				}
 			}
 
 			//
@@ -68,16 +66,14 @@ namespace NetDebug {
 			len = Main.item.Length - 1;
 			for( int i=0; i<len; i++ ) {
 				int incType = (int)reader.ReadInt16();
-				bool incActive = incType != -1;
+				bool incActive = incType != 0;
 
-				if( Main.item[i].active == incActive ) {
-					continue;
-				}
-				if( Main.item[i].type == incType ) {
-					continue;
-				}
+				Item item = Main.item[i];
+				bool wasActive = item?.active == true;
 
-				itemChanges[i] = incType;
+				if( wasActive != incActive || item?.type != incType ) {
+					itemChanges[i] = incType;
+				}
 			}
 
 			this.ApplySync( npcChanges, itemChanges );

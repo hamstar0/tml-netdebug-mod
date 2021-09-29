@@ -14,7 +14,8 @@ namespace NetDebug {
 
 		public UISyncDataElement( int npcWho, string text ) : base( text, 0.75f, false ) {
 			this.SetPadding( 0f );
-			this.BackgroundColor = Color.White * 0.25f;
+			this.BackgroundColor = Color.White * 0.05f;
+			this.BorderColor *= 0.2f;
 
 			this.NpcWho = npcWho;
 		}

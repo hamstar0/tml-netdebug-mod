@@ -40,9 +40,9 @@ namespace NetDebug {
 		private void AddNpcListEntry( int npcWho, int npcType ) {
 			NPC npc = Main.npc[npcWho];
 
-			int currType = npc?.active == true
-				? npc.netID
-				: -1;
+			string currType = npc?.active == true
+				? ""+npc.netID
+				: "-";
 			string info = npc?.active == true
 				? npc.FullName
 				: "-";
@@ -62,9 +62,9 @@ namespace NetDebug {
 		private void AddItemListEntry( int itemWho, int itemType ) {
 			Item item = Main.item[itemWho];
 
-			int currType = item?.active == true
-				? item.type
-				: -1;
+			string currType = item?.active == true
+				? ""+item.type
+				: "-";
 			string info = item?.active == true
 				? item.Name
 				: "-";
