@@ -50,7 +50,7 @@ namespace NetDebug {
 
 			//
 
-			var elem = new SyncDataElement( npcWho, data );
+			var elem = new UISyncDataElement( npcWho, data );
 
 			this.NpcsList.Add( elem );
 
@@ -72,7 +72,7 @@ namespace NetDebug {
 
 			//
 
-			var elem = new SyncDataElement( itemWho, data );
+			var elem = new UISyncDataElement( itemWho, data );
 
 			this.ItemsList.Add( elem );
 
