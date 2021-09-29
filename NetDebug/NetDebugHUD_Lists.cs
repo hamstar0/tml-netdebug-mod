@@ -9,12 +9,6 @@ using HUDElementsLib;
 
 namespace NetDebug {
 	partial class NetDebugHUD : HUDElement {
-		public static Color MaxFadeColor { get; } = new Color( 64, 64, 64 );
-
-
-
-		////////////////
-
 		public void ApplyNpcChangesToList( IDictionary<int, (int type, int fadeDuration)> changes ) {
 			foreach( KeyValuePair<int, (int type, int fade)> kv in changes.ToArray() ) {
 				int npcWho = kv.Key;
@@ -45,23 +39,7 @@ namespace NetDebug {
 		////////////////
 
 		private void AddNpcListEntry( int npcWho, int npcNetID ) {
-			NPC npc = Main.npc[npcWho];
-
-			string npcName = npcNetID != 0
-				? NPCID.Search.GetName( npcNetID )
-				: "-";
-
-			string currType = npc?.active == true
-				? ""+npc.netID
-				: "-";
-			string info = npc?.active == true
-				? npc.FullName
-				: "-";
-			string data = npcWho+": Is "+currType+" ("+info+"), expecting "+npcNetID+" ("+npcName+")";
-
-			//
-
-			var elem = new UISyncDataElement( npcWho, data );
+			UISyncDataElement elem = UISyncDataElement.CreateForNpc( npcWho, npcNetID );
 
 			this.NpcsList.Add( elem );
 
@@ -71,23 +49,7 @@ namespace NetDebug {
 		}
 		
 		private void AddItemListEntry( int itemWho, int itemType ) {
-			Item item = Main.item[itemWho];
-
-			string itemName = itemType != 0
-				? ItemID.Search.GetName( itemType )
-				: "-";
-
-			string currType = item?.active == true
-				? ""+item.type
-				: "-";
-			string info = item?.active == true
-				? item.Name
-				: "-";
-			string data = itemWho+": Is "+currType+" ("+info+"), expecting "+itemType+" ("+itemName+")";
-
-			//
-
-			var elem = new UISyncDataElement( itemWho, data );
+			UISyncDataElement elem = UISyncDataElement.CreateForItem( itemWho, itemType );
 
 			this.ItemsList.Add( elem );
 

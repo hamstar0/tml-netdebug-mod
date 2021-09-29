@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -46,7 +45,7 @@ namespace NetDebug {
 
 
 		////////////////
-
+		
 		public override void MidUpdateTimeWorld() {
 			if( Main.netMode == NetmodeID.Server ) {
 				if( this.ServerSyncTimer-- <= 0 ) {
@@ -56,8 +55,34 @@ namespace NetDebug {
 				}
 			}
 
-			this.UpdateRecentNpcChanges();
-			this.UpdateRecentItemChanges();
+			this.UpdateRecentSyncChanges();
+		}
+
+
+		////////////////
+
+		public void ClearOldDesyncs() {
+			foreach( KeyValuePair<int, (int type, int fade)> kv in this.RecentNpcChanges.ToArray() ) {
+				int who = kv.Key;
+				int fade = kv.Value.fade + 1;
+
+				if( fade >= NetDebugMod.MaxFadeDuration ) {
+					this.RecentNpcChanges.Remove( who );
+					
+					this.HUD.RemoveNpcEntry( who );
+				}
+			}
+
+			foreach( KeyValuePair<int, (int type, int fade)> kv in this.RecentItemChanges.ToArray() ) {
+				int who = kv.Key;
+				int fade = kv.Value.fade + 1;
+
+				if( fade >= NetDebugMod.MaxFadeDuration ) {
+					this.RecentItemChanges.Remove( who );
+					
+					this.HUD.RemoveItemEntry( who );
+				}
+			}
 		}
 	}
 }
