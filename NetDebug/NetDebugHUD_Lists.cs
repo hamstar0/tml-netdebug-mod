@@ -1,44 +1,17 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using Microsoft.Xna.Framework;
 using Terraria;
-using Terraria.ID;
 using HUDElementsLib;
 
 
 namespace NetDebug {
 	partial class NetDebugHUD : HUDElement {
-		public void ApplyNpcChangesToList( IDictionary<int, (int type, int fadeDuration)> changes ) {
-			foreach( KeyValuePair<int, (int type, int fade)> kv in changes.ToArray() ) {
-				int npcWho = kv.Key;
-				int npcType = kv.Value.type;
-
-				if( !this.NpcListElements.ContainsKey(npcWho) ) {
-					this.AddNpcListEntry( npcWho, npcType );
-				} else {
-					this.UpdateNpcListEntry( changes, npcWho );
-				}
+		public bool AddNpcListEntry( int npcWho, int npcNetID ) {
+			if( this.NpcListElements.ContainsKey(npcWho) ) {
+				return false;
 			}
-		}
 
-		public void ApplyItemChangesToList( IDictionary<int, (int type, int fadeDuration)> changes ) {
-			foreach( KeyValuePair<int, (int type, int fade)> kv in changes.ToArray() ) {
-				int itemWho = kv.Key;
-				int itemType = kv.Value.type;
-
-				if( !this.ItemListElements.ContainsKey(itemWho) ) {
-					this.AddItemListEntry( itemWho, itemType );
-				} else {
-					this.UpdateItemListEntry( changes, itemWho );
-				}
-			}
-		}
-
-
-		////////////////
-
-		private void AddNpcListEntry( int npcWho, int npcNetID ) {
 			UISyncDataElement elem = UISyncDataElement.CreateForNpc( npcWho, npcNetID );
 
 			this.NpcsList.Add( elem );
@@ -46,9 +19,15 @@ namespace NetDebug {
 			//
 
 			this.NpcListElements[ npcWho ] = elem;
+
+			return true;
 		}
 		
-		private void AddItemListEntry( int itemWho, int itemType ) {
+		public bool AddItemListEntry( int itemWho, int itemType ) {
+			if( this.NpcListElements.ContainsKey(itemWho) ) {
+				return false;
+			}
+
 			UISyncDataElement elem = UISyncDataElement.CreateForItem( itemWho, itemType );
 
 			this.ItemsList.Add( elem );
@@ -56,6 +35,8 @@ namespace NetDebug {
 			//
 
 			this.ItemListElements[ itemWho ] = elem;
+
+			return true;
 		}
 
 		////////////////
@@ -85,18 +66,22 @@ namespace NetDebug {
 
 		////////////////
 
-		private void UpdateNpcListEntry( IDictionary<int, (int type, int fadeDuration)> changes, int npcWho ) {
-			float fade = (float)changes[npcWho].fadeDuration / NetDebugMod.MaxFadeDuration;
-			if( fade > 1f ) { fade = 1f; }
+		public void UpdateNpcListEntries( IDictionary<int, (int type, int fadeDuration)> changes ) {
+			foreach( int npcWho in changes.Keys ) {
+				float fade = (float)changes[npcWho].fadeDuration / NetDebugMod.MaxFadeDuration;
+				if( fade > 1f ) { fade = 1f; }
 
-			this.NpcListElements[ npcWho ].TextColor = Color.Lerp( Color.White, NetDebugHUD.MaxFadeColor, fade );
+				this.NpcListElements[npcWho].TextColor = Color.Lerp( Color.White, NetDebugHUD.MaxFadeColor, fade );
+			}
 		}
 
-		private void UpdateItemListEntry( IDictionary<int, (int type, int fadeDuration)> changes, int itemWho ) {
-			float fade = (float)changes[itemWho].fadeDuration / NetDebugMod.MaxFadeDuration;
-			if( fade > 1f ) { fade = 1f; }
+		public void UpdateItemListEntries( IDictionary<int, (int type, int fadeDuration)> changes ) {
+			foreach( int itemWho in changes.Keys ) {
+				float fade = (float)changes[itemWho].fadeDuration / NetDebugMod.MaxFadeDuration;
+				if( fade > 1f ) { fade = 1f; }
 
-			this.ItemListElements[ itemWho ].TextColor = Color.Lerp( Color.White, NetDebugHUD.MaxFadeColor, fade );
+				this.ItemListElements[ itemWho ].TextColor = Color.Lerp( Color.White, NetDebugHUD.MaxFadeColor, fade );
+			}
 		}
 	}
 }

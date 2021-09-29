@@ -12,7 +12,16 @@ namespace NetDebug {
 
 		////////////////
 
-		private void UpdateRecentSyncChanges() {
+		private void UpdateRecentChanges() {
+			this.UpdateRecentChangesTimers();
+
+			this.HUD.UpdateNpcListEntries( this.RecentNpcChanges );
+			this.HUD.UpdateItemListEntries( this.RecentItemChanges );
+		}
+
+		////
+
+		private void UpdateRecentChangesTimers() {
 			foreach( KeyValuePair<int, (int type, int fade)> kv in this.RecentNpcChanges.ToArray() ) {
 				int who = kv.Key;
 				int fade = kv.Value.fade + 1;
@@ -21,9 +30,10 @@ namespace NetDebug {
 					//this.RecentNpcChanges.Remove( who );
 					//
 					//this.HUD.RemoveNpcEntry( who );
-				} else {
-					this.RecentNpcChanges[who] = (kv.Value.type, fade);
+				//} else {
 				}
+
+				this.RecentNpcChanges[who] = (kv.Value.type, fade);
 			}
 
 			foreach( KeyValuePair<int, (int type, int fade)> kv in this.RecentItemChanges.ToArray() ) {
@@ -34,9 +44,10 @@ namespace NetDebug {
 					//this.RecentItemChanges.Remove( who );
 					//
 					//this.HUD.RemoveItemEntry( who );
-				} else {
-					this.RecentItemChanges[who] = (kv.Value.type, fade);
+				//} else {
 				}
+
+				this.RecentItemChanges[who] = (kv.Value.type, fade);
 			}
 		}
 	}

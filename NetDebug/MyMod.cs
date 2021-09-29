@@ -23,8 +23,8 @@ namespace NetDebug {
 
 		private int ServerSyncTimer = 0;
 
-		private IDictionary<int, (int type, int fadeDuration)> RecentNpcChanges = new Dictionary<int, (int, int)>();
-		private IDictionary<int, (int type, int fadeDuration)> RecentItemChanges = new Dictionary<int, (int, int)>();
+		internal IDictionary<int, (int type, int fadeDuration)> RecentNpcChanges = new Dictionary<int, (int, int)>();
+		internal IDictionary<int, (int type, int fadeDuration)> RecentItemChanges = new Dictionary<int, (int, int)>();
 
 
 		////////////////
@@ -55,7 +55,7 @@ namespace NetDebug {
 				}
 			}
 
-			this.UpdateRecentSyncChanges();
+			this.UpdateRecentChanges();
 		}
 
 

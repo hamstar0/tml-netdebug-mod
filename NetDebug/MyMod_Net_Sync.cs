@@ -14,63 +14,27 @@ namespace NetDebug {
 			}
 		}
 
+		////
+
 		private void ApplyNpcSync( IDictionary<int, int> changes ) {
-			bool hasChanged = true;
-
 			foreach( KeyValuePair<int, int> kv in changes ) {
-				int who = kv.Key;
-				int netID = kv.Value;
-				NPC npc = Main.npc[who];
+				int chgWho = kv.Key;
+				int chgNetID = kv.Value;
 
-				if( netID == 0 ) {
-					if( npc?.active == true ) {
-						this.RecentNpcChanges[who] = (netID, 0);
-						hasChanged = true;
-					}
-				} else {
-					if( npc?.active != true || npc.netID != netID ) {
-						this.RecentNpcChanges[who] = (netID, 0);
-						hasChanged = true;
-					}
-				}
-			}
+				this.RecentNpcChanges[chgWho] = (chgNetID, 0);
 
-			if( hasChanged ) {
-				this.HUD.ApplyNpcChangesToList( this.RecentNpcChanges );
+				this.HUD.AddNpcListEntry( chgWho, chgNetID );
 			}
 		}
 
-
 		private void ApplyItemSync( IDictionary<int, int> changes ) {
-			if( changes.Count == 0 ) {
-				return;
-			}
+			foreach( KeyValuePair<int, int> kv in changes ) {
+				int chgWho = kv.Key;
+				int chgType = kv.Value;
 
-			bool hasChanged = true;
+				this.RecentItemChanges[chgWho] = (chgType, 0);
 
-			int len = Main.item.Length - 1;
-			for( int i=0; i<len; i++ ) {
-				if( !changes.ContainsKey(i) ) {
-					continue;
-				}
-
-				Item item = Main.item[i];
-
-				if( changes[i] == 0 ) {
-					if( item?.active == true ) {
-						this.RecentItemChanges[i] = (changes[i], 0);
-						hasChanged = true;
-					}
-				} else {
-					if( item?.active != true || item.type != changes[i] ) {
-						this.RecentItemChanges[i] = (changes[i], 0);
-						hasChanged = true;
-					}
-				}
-			}
-
-			if( hasChanged ) {
-				this.HUD.ApplyItemChangesToList( this.RecentItemChanges );
+				this.HUD.AddItemListEntry( chgWho, chgType );
 			}
 		}
 	}
