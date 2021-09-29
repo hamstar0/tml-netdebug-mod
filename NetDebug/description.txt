@@ -1,0 +1,1 @@
+Shows a HUD panel that reveals desynced items and npcs.
