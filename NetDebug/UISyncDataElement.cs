@@ -7,7 +7,7 @@ using Terraria.GameContent.UI.Elements;
 
 namespace NetDebug {
 	class UISyncDataElement : UITextPanel<string> {
-		public static UISyncDataElement CreateForNpc( int npcWho, int npcNetID ) {
+		public static UISyncDataElement CreateForNpc( int npcWho, int otherNpcNetID ) {
 			NPC npc = Main.npc[npcWho];
 
 			string currType = npc?.active == true
@@ -16,17 +16,18 @@ namespace NetDebug {
 			string currName = npc?.active == true
 				? npc.FullName
 				: "-";
-			string npcName = npcNetID != 0
-				? NPCID.Search.GetName( npcNetID )
+
+			string otherNpcName = otherNpcNetID != 0
+				? NPCID.Search.GetName( otherNpcNetID )
 				: "-";
 
-			string data = npcWho + ": Is " + currType + " (" + currName + ")"
-							+", expecting " + npcNetID + " (" + npcName + ")";
+			string data = npcWho + " - Is " + currType + " (" + currName + ")"
+							+", expecting " + otherNpcNetID + " (" + otherNpcName + ")";
 
 			return new UISyncDataElement( npcWho, data );
 		}
 
-		public static UISyncDataElement CreateForItem( int itemWho, int itemType ) {
+		public static UISyncDataElement CreateForItem( int itemWho, int otherItemType ) {
 			Item item = Main.item[itemWho];
 
 			string currType = item?.active == true
@@ -35,12 +36,13 @@ namespace NetDebug {
 			string currName = item?.active == true
 				? item.Name
 				: "-";
-			string itemName = itemType != 0
-				? ItemID.Search.GetName( itemType )
+
+			string otherItemName = otherItemType != 0
+				? ItemID.Search.GetName( otherItemType )
 				: "-";
 
-			string data = itemWho + ": Is " + currType + " (" + currName + ")"
-							+", expecting " + itemType + " (" + itemName + ")";
+			string data = itemWho + " - Is " + currType + " (" + currName + ")"
+							+", expecting " + otherItemType + " (" + otherItemName + ")";
 
 			return new UISyncDataElement( itemWho, data );
 		}

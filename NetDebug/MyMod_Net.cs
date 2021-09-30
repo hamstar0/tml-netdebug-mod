@@ -50,14 +50,16 @@ namespace NetDebug {
 
 			len = Main.npc.Length - 1;
 			for( int i=0; i<len; i++ ) {
-				int incNetID = (int)reader.ReadInt16();
-				bool incActive = incNetID != 0;
+				int otherNetID = (int)reader.ReadInt16();
+				bool otherActive = otherNetID != 0;
 
-				NPC npc = Main.npc[i];
-				bool wasActive = npc?.active == true;
+				NPC currNpc = Main.npc[i];
+				bool currActive = currNpc?.active == true;
 
-				if( wasActive != incActive || npc?.netID != incNetID ) {
-					npcChanges[i] = incNetID;
+				if( currActive && currNpc?.netID != otherNetID ) {
+					npcChanges[i] = otherNetID;
+				} else if( otherActive ) {
+					npcChanges[i] = otherNetID;
 				}
 			}
 
@@ -65,14 +67,16 @@ namespace NetDebug {
 
 			len = Main.item.Length - 1;
 			for( int i=0; i<len; i++ ) {
-				int incType = (int)reader.ReadInt16();
-				bool incActive = incType != 0;
+				int otherType = (int)reader.ReadInt16();
+				bool otherActive = otherType != 0;
 
-				Item item = Main.item[i];
-				bool wasActive = item?.active == true;
+				Item currItem = Main.item[i];
+				bool currActive = currItem?.active == true;
 
-				if( wasActive != incActive || item?.type != incType ) {
-					itemChanges[i] = incType;
+				if( currActive && currItem?.type != otherType ) {
+					itemChanges[i] = otherType;
+				} else if( otherActive ) {
+					itemChanges[i] = otherType;
 				}
 			}
 

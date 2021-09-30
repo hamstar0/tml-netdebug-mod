@@ -7,12 +7,12 @@ using HUDElementsLib;
 
 namespace NetDebug {
 	partial class NetDebugHUD : HUDElement {
-		public bool AddNpcListEntry( int npcWho, int npcNetID ) {
+		public bool AddNpcListEntry( int npcWho, int otherNpcNetID ) {
 			if( this.NpcListElements.ContainsKey(npcWho) ) {
 				return false;
 			}
 
-			UISyncDataElement elem = UISyncDataElement.CreateForNpc( npcWho, npcNetID );
+			UISyncDataElement elem = UISyncDataElement.CreateForNpc( npcWho, otherNpcNetID );
 
 			this.NpcsList.Add( elem );
 
@@ -23,12 +23,12 @@ namespace NetDebug {
 			return true;
 		}
 		
-		public bool AddItemListEntry( int itemWho, int itemType ) {
+		public bool AddItemListEntry( int itemWho, int otherItemType ) {
 			if( this.NpcListElements.ContainsKey(itemWho) ) {
 				return false;
 			}
 
-			UISyncDataElement elem = UISyncDataElement.CreateForItem( itemWho, itemType );
+			UISyncDataElement elem = UISyncDataElement.CreateForItem( itemWho, otherItemType );
 
 			this.ItemsList.Add( elem );
 
