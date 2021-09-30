@@ -26,12 +26,12 @@ namespace NetDebug {
 				int who = kv.Key;
 				int fade = kv.Value.fade + 1;
 
-				if( fade >= NetDebugMod.MaxFadeDuration ) {
+				//if( fade >= NetDebugMod.MaxFadeDuration ) {
 					//this.RecentNpcChanges.Remove( who );
 					//
 					//this.HUD.RemoveNpcEntry( who );
 				//} else {
-				}
+				//}
 
 				this.RecentNpcChanges[who] = (kv.Value.type, fade);
 			}
@@ -40,12 +40,12 @@ namespace NetDebug {
 				int who = kv.Key;
 				int fade = kv.Value.fade + 1;
 
-				if( fade >= NetDebugMod.MaxFadeDuration ) {
+				//if( fade >= NetDebugMod.MaxFadeDuration ) {
 					//this.RecentItemChanges.Remove( who );
 					//
 					//this.HUD.RemoveItemEntry( who );
 				//} else {
-				}
+				//}
 
 				this.RecentItemChanges[who] = (kv.Value.type, fade);
 			}
