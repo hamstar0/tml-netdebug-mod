@@ -24,7 +24,7 @@ namespace NetDebug {
 		}
 		
 		public bool AddItemListEntry( int itemWho, int otherItemType ) {
-			if( this.NpcListElements.ContainsKey(itemWho) ) {
+			if( this.ItemListElements.ContainsKey(itemWho) ) {
 				return false;
 			}
 
@@ -68,6 +68,10 @@ namespace NetDebug {
 
 		public void UpdateNpcListEntries( IDictionary<int, (int type, int fadeDuration)> changes ) {
 			foreach( int npcWho in changes.Keys ) {
+				if( !this.NpcListElements.ContainsKey(npcWho) ) {
+					continue;
+				}
+
 				float fade = (float)changes[npcWho].fadeDuration / NetDebugMod.MaxFadeDuration;
 				if( fade > 1f ) { fade = 1f; }
 
@@ -77,6 +81,10 @@ namespace NetDebug {
 
 		public void UpdateItemListEntries( IDictionary<int, (int type, int fadeDuration)> changes ) {
 			foreach( int itemWho in changes.Keys ) {
+				if( !this.ItemListElements.ContainsKey(itemWho) ) {
+					continue;
+				}
+
 				float fade = (float)changes[itemWho].fadeDuration / NetDebugMod.MaxFadeDuration;
 				if( fade > 1f ) { fade = 1f; }
 

@@ -17,11 +17,13 @@ namespace NetDebug {
 				? npc.FullName
 				: "-";
 
-			string otherNpcName = otherNpcNetID != 0
+			string otherNpcName = otherNpcNetID != 0 && otherNpcNetID < NPCID.Count
 				? NPCID.Search.GetName( otherNpcNetID )
+				: otherNpcNetID != 0
+				? "" + otherNpcNetID
 				: "-";
 
-			string data = npcWho + " - Is " + currType + " (" + currName + ")"
+			string data = npcWho + ": Is " + currType + " (" + currName + ")"
 							+", expecting " + otherNpcNetID + " (" + otherNpcName + ")";
 
 			return new UISyncDataElement( npcWho, data );
@@ -37,8 +39,10 @@ namespace NetDebug {
 				? item.Name
 				: "-";
 
-			string otherItemName = otherItemType != 0
+			string otherItemName = otherItemType != 0 && otherItemType < ItemID.Count
 				? ItemID.Search.GetName( otherItemType )
+				: otherItemType != 0
+				? ""+otherItemType
 				: "-";
 
 			string data = itemWho + " - Is " + currType + " (" + currName + ")"
@@ -57,7 +61,7 @@ namespace NetDebug {
 
 		////////////////
 		
-		private UISyncDataElement( int npcWho, string text ) : base( text, 0.75f, false ) {
+		private UISyncDataElement( int npcWho, string text ) : base( text, 0.8f, false ) {
 			this.SetPadding( 0f );
 			this.BackgroundColor = Color.White * 0.05f;
 			this.BorderColor *= 0.2f;
