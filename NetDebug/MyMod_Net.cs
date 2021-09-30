@@ -56,8 +56,10 @@ namespace NetDebug {
 				NPC currNpc = Main.npc[i];
 				bool currActive = currNpc?.active == true;
 
-				if( currActive && currNpc?.netID != otherNetID ) {
-					npcChanges[i] = otherNetID;
+				if( currActive ) {
+					if( currNpc?.netID != otherNetID ) {
+						npcChanges[i] = otherNetID;
+					}
 				} else if( otherActive ) {
 					npcChanges[i] = otherNetID;
 				}
@@ -73,8 +75,10 @@ namespace NetDebug {
 				Item currItem = Main.item[i];
 				bool currActive = currItem?.active == true;
 
-				if( currActive && currItem?.type != otherType ) {
-					itemChanges[i] = otherType;
+				if( currActive ) {
+					if( currItem?.type != otherType ) {
+						itemChanges[i] = otherType;
+					}
 				} else if( otherActive ) {
 					itemChanges[i] = otherType;
 				}
