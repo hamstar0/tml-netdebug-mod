@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Terraria;
+using Terraria.ID;
 using Terraria.ModLoader;
 
 
@@ -15,8 +16,10 @@ namespace NetDebug {
 		private void UpdateRecentChanges() {
 			this.UpdateRecentChangesTimers();
 
-			this.HUD.UpdateNpcListEntries( this.RecentNpcChanges );
-			this.HUD.UpdateItemListEntries( this.RecentItemChanges );
+			if( Main.netMode != NetmodeID.Server ) {
+				this.HUD.UpdateNpcListEntries( this.RecentNpcChanges );
+				this.HUD.UpdateItemListEntries( this.RecentItemChanges );
+			}
 		}
 
 		////
